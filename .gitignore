@@ -1,0 +1,11 @@
+# builds
+dist/
+dist.zip
+*.zip
+
+# deps
+node_modules/
+
+# env
+.env
+.env.*
