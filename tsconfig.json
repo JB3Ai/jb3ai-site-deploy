@@ -22,14 +22,7 @@
   },
   "include": [
     "src",
-    "pages",
-    "components",
-    "layouts",
-    "types.ts",
-    "App.tsx",
-    "index.tsx",
-    "vite.config.ts",
-    "src/vite-env.d.ts"
+    "vite.config.ts"
   ],
   "exclude": [
     "brochures",
