@@ -23,8 +23,8 @@ const BROCHURES: Brochure[] = [
         title: 'OS³ Dash',
         category: 'Enterprise Operations',
         description: 'The modular AI operating system designed for enterprise-scale integration and real-time operational efficiency.',
-        pdfUrl: '/documents/pdfs/jb3os3-dash-operating-system.pdf',
-        fileSize: '16.6 MB',
+        pdfUrl: '/documents/pdfs/JB3Ai_OS3_Dash.pdf',
+        fileSize: '8.0 MB',
         imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop"
     },
     {
@@ -32,8 +32,8 @@ const BROCHURES: Brochure[] = [
         title: 'InvestigatorAi',
         category: 'Legal & Compliance',
         description: 'Advanced forensic intelligence platform for deep-dive investigations and automated evidence synthesis.',
-        pdfUrl: '/documents/pdfs/jb3investigatorai-dash.pdf',
-        fileSize: '9.7 MB',
+        pdfUrl: '/documents/pdfs/JB3Ai_InvestigatorAi.pdf',
+        fileSize: '8.0 MB',
         imageUrl: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop"
     },
     {
@@ -68,8 +68,8 @@ const BROCHURES: Brochure[] = [
         title: 'Investment Deck',
         category: 'Qualified Investors',
         description: "A comprehensive overview of JB³Ai's trajectory, valuation, and market-disrupting technology stack.",
-        pdfUrl: '/documents/pdfs/jb3ai-investment-deck.pdf',
-        fileSize: '27.6 MB',
+        pdfUrl: '/documents/pdfs/JB3Ai_Investment_Deck.pdf',
+        fileSize: '26.4 MB',
         imageUrl: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto=format&fit=crop"
     },
     {
@@ -80,6 +80,33 @@ const BROCHURES: Brochure[] = [
         pdfUrl: '/documents/pdfs/jb3ai-intelligence-info-ai.pdf',
         fileSize: '13.7 MB',
         imageUrl: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=2070&auto=format&fit=crop"
+    },
+    {
+        id: 'os3-dash-v1',
+        title: 'OS³ Dash',
+        category: 'Enterprise Operations',
+        description: 'The modular AI operating system designed for enterprise-scale integration and real-time operational efficiency.',
+        pdfUrl: '/documents/pdfs/jb3os3-dash-operating-system.pdf',
+        fileSize: '15.9 MB',
+        imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop"
+    },
+    {
+        id: 'investigator-ai-v1',
+        title: 'InvestigatorAi',
+        category: 'Legal & Compliance',
+        description: 'Advanced forensic intelligence platform for deep-dive investigations and automated evidence synthesis.',
+        pdfUrl: '/documents/pdfs/jb3investigatorai-dash.pdf',
+        fileSize: '9.3 MB',
+        imageUrl: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop"
+    },
+    {
+        id: 'investment-deck-v1',
+        title: 'Investment Deck',
+        category: 'Qualified Investors',
+        description: "A comprehensive overview of JB³Ai's trajectory, valuation, and market-disrupting technology stack.",
+        pdfUrl: '/documents/pdfs/jb3ai-investment-deck.pdf',
+        fileSize: '27.2 MB',
+        imageUrl: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto=format&fit=crop"
     }
 ];
 
@@ -237,7 +264,7 @@ export const BrochuresPage: React.FC<BrochuresPageProps> = ({ onNavigate }) => {
                                             <span className="text-[8px] font-bold uppercase tracking-[0.1em] text-white/20">Ref: {brochure.id.slice(0, 4)}</span>
                                         </div>
                                     </div>
-                                    <h3 className="text-lg font-display font-black mb-3 uppercase tracking-tight text-white group-hover:text-[#66FF66] transition-colors">{brochure.title}</h3>
+                                    <h3 className="text-xl font-display font-semibold mb-3 tracking-wide text-white group-hover:text-[#66FF66] transition-colors">{brochure.title}</h3>
                                     <div className="w-12 h-px bg-[#66FF66] mb-4 opacity-30 group-hover:opacity-100 transition-opacity"></div>
                                     <p className="text-white/90 leading-relaxed mb-6 flex-grow text-sm font-medium max-w-[85%] group-hover:text-white transition-colors duration-500">
                                         {brochure.description}
