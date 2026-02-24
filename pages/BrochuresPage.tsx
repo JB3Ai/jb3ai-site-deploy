@@ -228,7 +228,7 @@ export const BrochuresPage: React.FC<BrochuresPageProps> = ({ onNavigate }) => {
             {/* Brochure Grid */}
             <section className={`relative z-10 py-10 border-t border-white/5 transition-all duration-1000 delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         {BROCHURES.map((brochure, idx) => (
                             <div
                                 key={brochure.id}
@@ -250,9 +250,9 @@ export const BrochuresPage: React.FC<BrochuresPageProps> = ({ onNavigate }) => {
                                     </div>
                                 )}
 
-                                <div className="relative z-10 flex flex-col h-full p-8">
+                                <div className="relative z-10 flex flex-col h-full p-6">
                                     <div className="flex justify-between items-start mb-5">
-                                        <div className="w-10 h-10 flex items-center justify-center">
+                                        <div className="w-8 h-8 flex items-center justify-center">
                                             <img
                                                 src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg"
                                                 alt="PDF"
@@ -269,19 +269,19 @@ export const BrochuresPage: React.FC<BrochuresPageProps> = ({ onNavigate }) => {
                                     <p className="text-white/90 leading-relaxed mb-6 flex-grow text-sm font-medium max-w-[85%] group-hover:text-white transition-colors duration-500">
                                         {brochure.description}
                                     </p>
-                                    <div className="flex gap-4 mt-auto">
+                                    <div className="flex gap-3 mt-auto">
                                         <a
                                             href={brochure.pdfUrl}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex-1 py-4 flex items-center justify-center gap-2 rounded-2xl bg-white/5 hover:bg-white/10 text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-300 border border-white/5 text-[#9AA3AD] hover:text-white"
+                                            className="flex-1 py-3 flex items-center justify-center gap-2 rounded-xl bg-white/5 hover:bg-white/10 text-[9px] font-black uppercase tracking-[0.2em] transition-all duration-300 border border-white/5 text-[#9AA3AD] hover:text-white"
                                         >
                                             <Eye className="w-4 h-4" /> Preview
                                         </a>
                                         <a
                                             href={brochure.pdfUrl}
                                             download
-                                            className="flex-1 py-4 flex items-center justify-center gap-2 rounded-2xl bg-[#66FF66] hover:brightness-110 text-black text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-300 shadow-xl shadow-[#66FF66]/10 hover:shadow-[#66FF66]/30 hover:-translate-y-1"
+                                            className="flex-1 py-3 flex items-center justify-center gap-2 rounded-xl bg-[#66FF66] hover:brightness-110 text-black text-[9px] font-black uppercase tracking-[0.2em] transition-all duration-300 shadow-xl shadow-[#66FF66]/10 hover:shadow-[#66FF66]/30 hover:-translate-y-1"
                                         >
                                             <Download className="w-4 h-4" /> Download
                                         </a>

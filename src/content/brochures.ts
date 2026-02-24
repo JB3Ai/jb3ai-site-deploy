@@ -5,6 +5,7 @@ export const BROCHURES = {
     investigator: "/documents/pdfs/jb3investigatorai-dash.pdf",
     consulting: "/documents/pdfs/jb3consulting-accelerator.pdf",
     investment: "/documents/pdfs/jb3ai-investment-deck.pdf",
+    voicegrid: "/documents/pdfs/jb3ai-os3-voice-grid.pdf",
 } as const;
 
 export type BrochureKey = keyof typeof BROCHURES;
