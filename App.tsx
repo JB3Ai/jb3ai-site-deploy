@@ -178,6 +178,7 @@ const App: React.FC = () => {
       case AppModule.INVESTIGATOR_AI:
       case AppModule.SHIELD_AI:
       case AppModule.MINDCARE_AI:
+      case AppModule.PHONE_SYSTEM:
       case AppModule.ACCELERATOR:
         return <GenericDetailPage module={activeModule} onNavigate={navigate} />;
       case AppModule.TRUST:
