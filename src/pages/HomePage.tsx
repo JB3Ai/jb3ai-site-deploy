@@ -26,19 +26,30 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
         const v = heroVideoRef.current;
         if (!v) return;
 
+        // Explicit DOM-level overrides required for strict mobile browsers (iOS Safari, Low Power Mode)
+        v.defaultMuted = true;
+        v.muted = true;
+        v.playsInline = true;
+
         const tryPlay = async () => {
             try {
                 await v.play();
             } catch (e) {
+                // Autoplay blocked. Fallback to playing on first user interaction.
                 const onFirst = async () => {
                     try { await v.play(); } catch { }
-                    window.removeEventListener("pointerdown", onFirst);
+                    ['pointerdown', 'touchstart', 'click'].forEach(evt =>
+                        window.removeEventListener(evt, onFirst)
+                    );
                 };
-                window.addEventListener("pointerdown", onFirst, { once: true });
+                ['pointerdown', 'touchstart', 'click'].forEach(evt =>
+                    window.addEventListener(evt, onFirst, { once: true })
+                );
             }
         };
 
-        requestAnimationFrame(() => void tryPlay());
+        // Sometimes the browser needs a slight delay to process the DOM properties
+        setTimeout(() => requestAnimationFrame(() => void tryPlay()), 50);
     }, [shouldAnimate]);
 
     return (

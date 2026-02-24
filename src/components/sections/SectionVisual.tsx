@@ -22,6 +22,7 @@ export default function SectionVisual({
     if (video && videoSrc) {
       video.defaultMuted = true;
       video.muted = true;
+      video.playsInline = true;
 
       const handlePlaying = () => {
         console.log("[SectionVisual] Video started playing");
@@ -40,7 +41,15 @@ export default function SectionVisual({
           await video.play();
         } catch (err) {
           console.warn("[SectionVisual] Video autoplay prevented:", err);
-          // Retry once with interaction if needed, or just leave it (fallback image will show)
+          const onFirst = async () => {
+            try { await video.play(); } catch { }
+            ['pointerdown', 'touchstart', 'click'].forEach(evt =>
+              window.removeEventListener(evt, onFirst)
+            );
+          };
+          ['pointerdown', 'touchstart', 'click'].forEach(evt =>
+            window.addEventListener(evt, onFirst, { once: true })
+          );
         }
       };
 
