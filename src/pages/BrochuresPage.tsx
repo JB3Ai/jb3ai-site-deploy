@@ -227,8 +227,8 @@ export const BrochuresPage: React.FC<BrochuresPageProps> = ({ onNavigate }) => {
 
             {/* Brochure Grid */}
             <section className={`relative z-10 py-10 border-t border-white/5 transition-all duration-1000 delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                <div className="max-w-[90rem] mx-auto px-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+                <div className="max-w-6xl mx-auto px-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                         {BROCHURES.map((brochure, idx) => (
                             <div
                                 key={brochure.id}
