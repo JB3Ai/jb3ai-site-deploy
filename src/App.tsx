@@ -1,28 +1,32 @@
 
 import React, { useState, useEffect } from 'react';
 import { AppModule } from './types';
-import { NeuralCore } from './components/apps/NeuralCore';
-import { MediaLab } from './components/apps/MediaLab';
-import { MotionLab } from './components/apps/MotionLab';
-import { ClientZone } from './components/apps/ClientZone';
+import { Suspense } from 'react';
+import { HomePage } from './pages/HomePage'; // Keep home eager for fast LCP
 import { MarketingLayout } from './layouts/MarketingLayout';
 import { DemoLayout } from './layouts/DemoLayout';
 import { DemoGateModal } from './components/apps/DemoGateModal';
-
-// Moved content to data/content.ts
 import { PAGE_METADATA, getStructuredData } from './data/content';
 
-// Imported Pages
-import { HomePage } from './pages/HomePage';
-import { OS3DashInfoPage } from './pages/OS3DashInfoPage';
-import { AppsListPage } from './pages/AppsListPage';
-import { ServicesHubPage } from './pages/ServicesHubPage';
-import { ContactPage } from './pages/ContactPage';
-import { GenericDetailPage } from './pages/GenericDetailPage';
-import { AdvisoryPage } from './pages/AdvisoryPage';
-import { DemoWorkspacePage } from './pages/DemoWorkspacePage';
-import { PolicyPage } from './pages/PolicyPage';
-import { BrochuresPage } from './pages/BrochuresPage';
+const NeuralCore = React.lazy(() => import('./components/apps/NeuralCore').then(m => ({ default: m.NeuralCore })));
+const MediaLab = React.lazy(() => import('./components/apps/MediaLab').then(m => ({ default: m.MediaLab })));
+const MotionLab = React.lazy(() => import('./components/apps/MotionLab').then(m => ({ default: m.MotionLab })));
+const ClientZone = React.lazy(() => import('./components/apps/ClientZone').then(m => ({ default: m.ClientZone })));
+const OS3DashInfoPage = React.lazy(() => import('./pages/OS3DashInfoPage').then(m => ({ default: m.OS3DashInfoPage })));
+const AppsListPage = React.lazy(() => import('./pages/AppsListPage').then(m => ({ default: m.AppsListPage })));
+const ServicesHubPage = React.lazy(() => import('./pages/ServicesHubPage').then(m => ({ default: m.ServicesHubPage })));
+const ContactPage = React.lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
+const GenericDetailPage = React.lazy(() => import('./pages/GenericDetailPage').then(m => ({ default: m.GenericDetailPage })));
+const AdvisoryPage = React.lazy(() => import('./pages/AdvisoryPage').then(m => ({ default: m.AdvisoryPage })));
+const DemoWorkspacePage = React.lazy(() => import('./pages/DemoWorkspacePage').then(m => ({ default: m.DemoWorkspacePage })));
+const PolicyPage = React.lazy(() => import('./pages/PolicyPage').then(m => ({ default: m.PolicyPage })));
+const BrochuresPage = React.lazy(() => import('./pages/BrochuresPage').then(m => ({ default: m.BrochuresPage })));
+
+const LoadingFallback = () => (
+  <div className="w-full h-screen bg-black flex items-center justify-center">
+    <div className="w-8 h-8 border-4 border-white/10 border-t-[#66FF66] rounded-full animate-spin"></div>
+  </div>
+);
 
 const getModuleFromPath = (pathname: string): AppModule => {
   const cleanPath = pathname.startsWith('/') ? pathname.slice(1) : pathname;
@@ -204,7 +208,9 @@ const App: React.FC = () => {
       />
       {isDemoLayout ? (
         <DemoLayout activeModule={activeModule} navigate={navigate}>
-          {renderContent()}
+          <Suspense fallback={<LoadingFallback />}>
+            {renderContent()}
+          </Suspense>
         </DemoLayout>
       ) : (
         <MarketingLayout
@@ -215,7 +221,9 @@ const App: React.FC = () => {
           fontSize={fontSize}
           setFontSize={setFontSize}
         >
-          {renderContent()}
+          <Suspense fallback={<LoadingFallback />}>
+            {renderContent()}
+          </Suspense>
         </MarketingLayout>
       )}
     </>
