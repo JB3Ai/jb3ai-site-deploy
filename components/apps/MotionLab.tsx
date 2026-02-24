@@ -13,7 +13,7 @@ export const MotionLab: React.FC = () => {
   const [statusMessage, setStatusMessage] = useState('');
   const [hasAccess, setHasAccess] = useState<boolean | null>(null);
   const [logs, setLogs] = useState<string[]>([]);
-  
+
   // v2.0 Parameters
   const [preset, setPreset] = useState<Preset>('Standard Monolith');
   const [speed, setSpeed] = useState<'Steady' | 'Rapid'>('Steady');
@@ -52,39 +52,40 @@ export const MotionLab: React.FC = () => {
     setStatusMessage('Syncing quantum clusters...');
     addLog(`Initiating v2.0 Synthesis: ${preset} @ ${resolution}`);
 
-    const basePrompt = preset === 'Standard Monolith' 
+    const basePrompt = preset === 'Standard Monolith'
       ? "A heavy, monolithic black industrial cube. Inset glowing emerald green panels. Dark tech background."
       : preset === 'Data Flux'
-      ? "An OS3 core monolith dissolving into vertical emerald data streams. Deep space tech environment."
-      : preset === 'Neural Pulse'
-      ? "The OS3 monolith core pulsing with emerald energy waves. High contrast cinematic lighting."
-      : "A minimalist black cube in a forensic white void. Faint emerald technical lines tracing the edges.";
+        ? "An OS3 core monolith dissolving into vertical emerald data streams. Deep space tech environment."
+        : preset === 'Neural Pulse'
+          ? "The OS3 monolith core pulsing with emerald energy waves. High contrast cinematic lighting."
+          : "A minimalist black cube in a forensic white void. Faint emerald technical lines tracing the edges.";
 
-    const motionPrompt = speed === 'Steady' 
+    const motionPrompt = speed === 'Steady'
       ? "Extremely slow and steady rotation. Smooth camera push-in."
       : "Rapid geometric rotation with dynamic lighting shifts. High energy motion.";
 
     const fullPrompt = `${basePrompt} ${motionPrompt} Minimalist, industrial, high-end institutional asset. Seamless background loop. No text, no symbols.`.trim();
 
     try {
-      const config: VideoGenerationConfig = { 
-        prompt: fullPrompt, 
-        aspectRatio: '16:9', 
-        resolution: resolution 
+      const config: VideoGenerationConfig = {
+        prompt: fullPrompt,
+        aspectRatio: '16:9',
+        resolution: resolution
       };
 
       addLog("Transmitting synthesis parameters...");
       const operation = await generateVideo(config);
-      
+
       if (!operation) throw new Error("Operation initialization failed.");
 
       addLog("Render sequence active. Allocating GPU clusters...");
       setStatusMessage('Rendering high-fidelity loop...');
       const completedOp = await waitForVideoOperation(operation);
-      
+
       const uri = completedOp.response?.generatedVideos?.[0]?.video?.uri;
       if (uri) {
-        setVideoUrl(`${uri}&key=${process.env.API_KEY}`);
+        // Phase 1: Security fix - API Key removed from client bundle.
+        setVideoUrl(uri);
         setStatusMessage('Render successful.');
         addLog("Asset synthesis complete. Integrity validated.");
       } else {
@@ -92,12 +93,12 @@ export const MotionLab: React.FC = () => {
       }
     } catch (err: any) {
       if (err.message && err.message.includes("Requested entity was not found")) {
-          setHasAccess(false);
-          setError("Billing authentication required.");
-          addLog("Fatal: Billing project session expired.");
+        setHasAccess(false);
+        setError("Billing authentication required.");
+        addLog("Fatal: Billing project session expired.");
       } else {
-          setError("Render failed. System cluster busy.");
-          addLog("Error: Synthesis interrupted by cluster timeout.");
+        setError("Render failed. System cluster busy.");
+        addLog("Error: Synthesis interrupted by cluster timeout.");
       }
     } finally {
       setIsGenerating(false);
@@ -162,31 +163,31 @@ export const MotionLab: React.FC = () => {
               <Sliders className="w-3 h-3" /> Parameters
             </h3>
             <div className="space-y-4">
-               <div className="space-y-2">
-                  <label className="text-[9px] text-gray-600 uppercase font-mono">Motion Cadence</label>
-                  <div className="flex bg-black border border-gray-800 p-1">
-                    {(['Steady', 'Rapid'] as const).map(s => (
-                      <button key={s} onClick={() => setSpeed(s)} className={`flex-1 py-2 text-[9px] font-bold uppercase ${speed === s ? 'bg-white text-black' : 'text-gray-500'}`}>{s}</button>
-                    ))}
-                  </div>
-               </div>
-               <div className="space-y-2">
-                  <label className="text-[9px] text-gray-600 uppercase font-mono">Precision Layer</label>
-                  <div className="flex bg-black border border-gray-800 p-1">
-                    {(['720p', '1080p'] as const).map(r => (
-                      <button key={r} onClick={() => setResolution(r)} className={`flex-1 py-2 text-[9px] font-bold uppercase ${resolution === r ? 'bg-white text-black' : 'text-gray-500'}`}>{r}</button>
-                    ))}
-                  </div>
-               </div>
+              <div className="space-y-2">
+                <label className="text-[9px] text-gray-600 uppercase font-mono">Motion Cadence</label>
+                <div className="flex bg-black border border-gray-800 p-1">
+                  {(['Steady', 'Rapid'] as const).map(s => (
+                    <button key={s} onClick={() => setSpeed(s)} className={`flex-1 py-2 text-[9px] font-bold uppercase ${speed === s ? 'bg-white text-black' : 'text-gray-500'}`}>{s}</button>
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label className="text-[9px] text-gray-600 uppercase font-mono">Precision Layer</label>
+                <div className="flex bg-black border border-gray-800 p-1">
+                  {(['720p', '1080p'] as const).map(r => (
+                    <button key={r} onClick={() => setResolution(r)} className={`flex-1 py-2 text-[9px] font-bold uppercase ${resolution === r ? 'bg-white text-black' : 'text-gray-500'}`}>{r}</button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="p-8 space-y-6 border-t border-gray-900 bg-black/40">
           {error && <div className="text-[10px] text-red-500 font-mono uppercase bg-red-500/5 p-4 border border-red-500/20">{error}</div>}
-          
-          <Button 
-            onClick={handleGenerate} 
+
+          <Button
+            onClick={handleGenerate}
             isLoading={isGenerating}
             className="w-full bg-white text-black h-16 text-[10px] font-bold tracking-[0.3em] hover:bg-gray-200"
           >
@@ -217,27 +218,27 @@ export const MotionLab: React.FC = () => {
               </div>
             </div>
             <div className="space-y-4 text-center">
-               <h4 className="text-white text-xs font-bold uppercase tracking-[0.4em]">Rendering Asset Data</h4>
-               <p className="text-[10px] text-gray-500 uppercase tracking-widest font-mono flex items-center justify-center gap-2">
-                 <Activity className="w-3 h-3 animate-bounce" /> Status: {statusMessage}
-               </p>
+              <h4 className="text-white text-xs font-bold uppercase tracking-[0.4em]">Rendering Asset Data</h4>
+              <p className="text-[10px] text-gray-500 uppercase tracking-widest font-mono flex items-center justify-center gap-2">
+                <Activity className="w-3 h-3 animate-bounce" /> Status: {statusMessage}
+              </p>
             </div>
           </div>
         )}
-        
+
         {videoUrl ? (
           <div className="w-full h-full flex flex-col items-center justify-center p-12 md:p-20 animate-fade-in relative z-10">
             <div className="w-full aspect-video shadow-[0_0_100px_rgba(0,0,0,0.8)] border border-gray-900 bg-black overflow-hidden relative group">
-               <video src={videoUrl} controls autoPlay loop className="w-full h-full object-cover" />
-               <div className="absolute top-4 right-4 flex gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                 <a href={videoUrl} download="os3_monolith_loop.mp4" className="bg-black/80 hover:bg-white hover:text-black p-4 transition-colors">
-                    <Download className="w-5 h-5" />
-                 </a>
-               </div>
+              <video src={videoUrl} controls autoPlay loop className="w-full h-full object-cover" />
+              <div className="absolute top-4 right-4 flex gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                <a href={videoUrl} download="os3_monolith_loop.mp4" className="bg-black/80 hover:bg-white hover:text-black p-4 transition-colors">
+                  <Download className="w-5 h-5" />
+                </a>
+              </div>
             </div>
             <div className="mt-12 flex items-center gap-10 text-[10px] text-gray-600 font-mono uppercase tracking-widest">
-               <span className="flex items-center gap-2 text-emerald-500"><ShieldCheck className="w-3 h-3" /> Integrity: Validated</span>
-               <span className="flex items-center gap-2"><Cpu className="w-3 h-3" /> Core Sync: Active</span>
+              <span className="flex items-center gap-2 text-emerald-500"><ShieldCheck className="w-3 h-3" /> Integrity: Validated</span>
+              <span className="flex items-center gap-2"><Cpu className="w-3 h-3" /> Core Sync: Active</span>
             </div>
           </div>
         ) : (
